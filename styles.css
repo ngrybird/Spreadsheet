@@ -1,0 +1,10 @@
+.row{
+    display:table-row;
+    width:auto;
+}
+.cell{
+    float:left;/*fix for  buggy browsers*/
+    display:table-cell;
+    width:200px;
+    background-color:#ccc;
+}
