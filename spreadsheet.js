@@ -3,7 +3,7 @@ var Spreadsheet  = function(options){
     var screenWidth, screenHeight;
     /** 
     *    function createContainer creates the container for spreadsheet.
-    *    it uses screenWidth and screenHeight public variable to create a container.
+    *    it uses screenWidth and screenHeight variable to create a container.
     */
     function createContainer(){
         var c = document.createElement("div");
@@ -19,6 +19,11 @@ var Spreadsheet  = function(options){
         return c;
     };
 
+
+    /**
+     * function createHeader prepares the header of the spreadsheet/table and inject 
+     * it on the top of the table
+     */
     function createHeader(){
         var header = document.createElement('div');
         header.style.width = this.width;
@@ -35,6 +40,11 @@ var Spreadsheet  = function(options){
         }
         this.container.appendChild(fragment);
     }
+
+    /**
+     * createRow function prepares the div element and call the createCell function
+     * for associated row : rowNumber.
+    */
     this.createRow = function(rowNumber){
         var row = document.createElement('div');
         var cell;
@@ -46,6 +56,10 @@ var Spreadsheet  = function(options){
         return row;
     }
     
+    /**
+    *  createCell function returns a cell for the row.
+    * value to be displayed in the cell is passed to this function as argument.  
+    */
     this.createCell = function(value){
         var cell = document.createElement('div');
         cell.classList.add('cell');
@@ -59,6 +73,8 @@ var Spreadsheet  = function(options){
     function createScroller(){
         console.log(screenWidth);
     };
+
+    
     // private members --> totalHeight, cellHeight, cellWidth, data, totalRows, columns;
     //Initialize options to the Spreadsheet
     this.init = function (){
