@@ -7,10 +7,12 @@ var Spreadsheet  = function(options){
     */
     function createContainer(){
         var c = document.createElement("div");
-        c.style.width = screenWidth + 'px';
+        c.style.display = "block";
+        c.style.minWidth = screenWidth + 'px';
         c.style.height = screenHeight + 'px' ;
-        c.style.display = 'table';
+        //c.style.display = 'table';
         c.style.overflow = "scroll";
+        c.style.overflowY = "scroll";
         c.style.position = "relative";
         c.style.padding = 0;
         c.style.border = "1px solid black";
@@ -47,6 +49,7 @@ var Spreadsheet  = function(options){
     this.createCell = function(value){
         var cell = document.createElement('div');
         cell.classList.add('cell');
+        cell.style.minWidth = this.cellWidth;
         cell.innerHTML = value;
         return cell;
     }
