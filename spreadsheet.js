@@ -31,13 +31,16 @@ var Spreadsheet  = function(options){
         
     }
 
-    this.render = function(){
+    this.render = function(fromPosition, howMany){
         var fragment = document.createDocumentFragment();
+        fragment.appendChild(this.scroller);
+
         var row;
-        for(var i=0; i<this.data.length; i++){
+        for(var i = fromPosition; i < howMany ; i++){
             row = this.createRow(i);
             fragment.appendChild(row);
         }
+
         this.container.appendChild(fragment);
     }
 
@@ -70,10 +73,23 @@ var Spreadsheet  = function(options){
     /**
      *   
     */
-    function createScroller(){
+    this.createScroller = function(){
         console.log(screenWidth);
+
+        var scroller = document.createElement("div");
+        scroller.style.opacity = 0;
+        scroller.style.position = "absolute";
+        scroller.style.top = 0;
+        scroller.style.left = 0;
+        scroller.style.width = "1px";
+        scroller.style.height = this.totalHeight + "px";
+        return scroller;
     };
 
+
+    this.onScroll = function(event){
+        console.log(event);
+    };    
     
     // private members --> totalHeight, cellHeight, cellWidth, data, totalRows, columns;
     //Initialize options to the Spreadsheet
@@ -86,15 +102,18 @@ var Spreadsheet  = function(options){
         this.columns = options.columns;
         this.data = options.data;
         this.totalRows = options.data.length;
-        // this.totalHeight = this.totalRows *  this.cellHeight;
+        this.totalHeight = this.totalRows *  this.cellHeight;
     };
 
     this.init();
     
     //Create a container form screenHeight and screenWidth
     this.container = createContainer();
-    this.scroller = createScroller();
-    this.render();
+    this.container.addEventListener("scroll", this.onScroll);
+    this.scroller = this.createScroller();
+
+    // Initially display 4 time of rows visible in a container.
+    this.render(0, 30);
 }
 
 
