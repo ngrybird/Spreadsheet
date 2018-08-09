@@ -1,6 +1,6 @@
 var Spreadsheet  = function(options){
     console.log('Hello From SpreadSheet');
-    var screenWidth, screenHeight;
+    var screenWidth, screenHeight, lastRepaintY;
     /** 
     *    function createContainer creates the container for spreadsheet.
     *    it uses screenWidth and screenHeight variable to create a container.
@@ -40,7 +40,7 @@ var Spreadsheet  = function(options){
             row = this.createRow(i);
             fragment.appendChild(row);
         }
-
+        this.container.innerHTML = ''; 
         this.container.appendChild(fragment);
     }
 
@@ -88,8 +88,15 @@ var Spreadsheet  = function(options){
 
 
     this.onScroll = function(event){
-        console.log(event);
-    };    
+        console.log('New fragment');
+        var scrollTop = event.target.scrollTop;
+        var first = parseInt(scrollTop/this.cellHeight) ;
+        first = first < 0? 0 : first;
+        if(!lastRepaintY || Math.abs(scrollTop - lastRepaintY) > maxBuffer){
+            this.render(first, this.visibleItems * 2);
+            lastRepaintY = first;
+        }
+    }.bind(this);    
     
     // private members --> totalHeight, cellHeight, cellWidth, data, totalRows, columns;
     //Initialize options to the Spreadsheet
@@ -111,9 +118,11 @@ var Spreadsheet  = function(options){
     this.container = createContainer();
     this.container.addEventListener("scroll", this.onScroll);
     this.scroller = this.createScroller();
-
+    
+    this.visibleItems =Math.ceil(screenHeight / this.cellHeight);   
+    var maxBuffer = this.visibleItems * this.cellHeight;
     // Initially display 4 time of rows visible in a container.
-    this.render(0, 30);
+    this.render(0, this.visibleItems * 3);
 }
 
 
