@@ -36,11 +36,13 @@ var Spreadsheet  = function(options){
         fragment.appendChild(this.scroller);
 
         var row;
-        for(var i = fromPosition; i < howMany ; i++){
+        for(var i = fromPosition; i < fromPosition + howMany ; i++){
             row = this.createRow(i);
+            row.style.position = 'absolute';
+            row.style.top = i * this.cellHeight + 'px';
             fragment.appendChild(row);
         }
-        this.container.innerHTML = ''; 
+        this.container.innerHTML = '';
         this.container.appendChild(fragment);
     }
 
@@ -66,7 +68,8 @@ var Spreadsheet  = function(options){
     this.createCell = function(value){
         var cell = document.createElement('div');
         cell.classList.add('cell');
-        cell.style.minWidth = this.cellWidth;
+        cell.style.minWidth = this.cellWidth + 'px';
+        cell.style.height = this.cellHeight + 'px';
         cell.innerHTML = value;
         return cell;
     }
@@ -79,8 +82,8 @@ var Spreadsheet  = function(options){
         var scroller = document.createElement("div");
         scroller.style.opacity = 0;
         scroller.style.position = "absolute";
-        scroller.style.top = 0;
-        scroller.style.left = 0;
+        scroller.style.top = 0 + 'px';
+        scroller.style.left = 0 + 'px';
         scroller.style.width = "1px";
         scroller.style.height = this.totalHeight + "px";
         return scroller;
@@ -134,7 +137,7 @@ for (i=0; i <1000; i++) {
 for(var i = 0; i<1000;i++){
     for(var j = 0; j < 3; j++){
         console.log(i +' '+j);
-        data[i][j] = columns[j]+i+j;
+        data[i][j] = columns[j]+ '-' +i+ '-' +j;
     }
 }
 
