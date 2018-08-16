@@ -132,11 +132,11 @@ var Spreadsheet  = function(options){
 
 
 var columns = ['a','b','c'];
-var data = new Array(10000);
-for (i=0; i <10000; i++) {
+var data = new Array(100000);
+for (i=0; i <100000; i++) {
     data[i]=new Array(3)
  }
-for(var i = 0; i<10000;i++){
+for(var i = 0; i<100000;i++){
     for(var j = 0; j < 3; j++){
         console.log(i +' '+j);
         data[i][j] = columns[j]+ '-' +i+ '-' +j;
