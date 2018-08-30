@@ -32,11 +32,12 @@ var Spreadsheet  = function(options){
     }
 
     this.render = function(fromPosition, howMany){
+        console.log('New fragment');
         var fragment = document.createDocumentFragment();
         fragment.appendChild(this.scroller);
-
+        console.log('from '+fromPosition+' to '+ Number(fromPosition+howMany));
         var row;
-        for(var i = fromPosition; i < fromPosition + howMany ; i++){
+        for(var i = fromPosition; i < fromPosition + howMany && i < this.data.length; i++){
             row = this.createRow(i);
             row.style.position = 'absolute';
             row.style.top = i * this.cellHeight + 'px';
@@ -93,11 +94,11 @@ var Spreadsheet  = function(options){
      * 
      */
     this.onScroll = function(event){
-        console.log('New fragment');
         var scrollTop = event.target.scrollTop;
         var first = parseInt(scrollTop/this.cellHeight) ;
         first = first < 0? 0 : first;
         if(!lastRepaintY || Math.abs(scrollTop - lastRepaintY) > maxBuffer){
+            console.log('REPAINT');
             this.render(first, this.visibleItems * 2);
             lastRepaintY = first;
         }
@@ -127,7 +128,7 @@ var Spreadsheet  = function(options){
     this.visibleItems =Math.ceil(screenHeight / this.cellHeight);   
     var maxBuffer = this.visibleItems * this.cellHeight;
     // Initially display 4 time of rows visible in a container.
-    this.render(0, this.visibleItems * 3);
+    this.render(0, this.visibleItems * 2);
 }
 
 
