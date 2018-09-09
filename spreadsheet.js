@@ -97,11 +97,11 @@ var Spreadsheet  = function(options){
         var scrollTop = event.target.scrollTop;
         var first = parseInt(scrollTop/this.cellHeight) ;
         first = first < 0? 0 : first;
-        if(!lastRepaintY || Math.abs(scrollTop - lastRepaintY) > maxBuffer){
+        //if(!lastRepaintY || Math.abs(scrollTop - lastRepaintY) > maxBuffer){
             console.log('REPAINT');
             this.render(first, this.visibleItems * 2);
             lastRepaintY = first;
-        }
+        //}
     }.bind(this);    
     
     // private members --> totalHeight, cellHeight, cellWidth, data, totalRows, columns;
